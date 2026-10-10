@@ -1,0 +1,47 @@
+application:
+  subdomain: beszel
+  multi_instance: false
+  upstreams:
+    - location: /
+      backend: http://beszel:8090
+  # 入口直接放行（不过微服账号）：应用自带账号体系，首次打开页面创建管理员
+  public_path:
+    - /
+services:
+  beszel:
+    # 镜像模式：Action 只读校验后把这行改写成加速地址（Docker Hub → docker.1ms.run）
+    # upstream: henrygd/beszel:0.21.0
+    image: henrygd/beszel:0.21.0
+    # scratch 镜像（只有 /beszel 一个静态二进制），默认 root；平台建的 /lzcapp/var/beszel 属主也是 root
+    user: root
+    environment:
+      # UI 里的链接、WebSocket 与通知里的地址都用它
+      APP_URL: 'https://{{ .S.AppDomain }}'
+    healthcheck:
+      # 镜像是 scratch，没有 shell/curl/wget，但 /beszel 自带 health 子命令（惯例同 magpie）
+      test:
+        - CMD
+        - /beszel
+        - health
+        - http://127.0.0.1:8090/api/health
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    binds:
+      - /lzcapp/var/beszel:/beszel_data
+usage: |
+  Beszel 是轻量服务器监控：hub 存历史指标、Docker 容器统计与告警，界面很省资源。
+
+  【首次使用】
+  打开应用域名，注册第一个管理员账号（数据都在 /lzcapp/var/beszel，升级不丢）。
+
+  【接入被监控的机器】
+  在每台要监控的机器上跑 agent（Docker、二进制或 systemd 都行，agent 监听 45876），
+  然后在 hub 的「添加系统」里填那台机器的地址和公钥即可。
+
+  连接方向是 **hub 主动连 agent**——所以微服这边只需要本应用能出网，
+  不用给 45876 开入站端口，agent 那台机器也不需要公网。
+
+  【注意】
+  agent 与 hub 版本要匹配（hub 0.21.0 配 agent 0.21.x）；本应用只打包了 hub。

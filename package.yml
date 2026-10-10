@@ -1,0 +1,18 @@
+package: cloud.lazycat.app.beszel
+version: 0.21.0
+name: Beszel
+description: Lightweight server monitoring hub — historical metrics, Docker container stats and alerts, with agents on the machines you monitor. MIT licensed.
+min_os_version: 1.5.0
+homepage: https://github.com/henrygd/beszel
+author: henrygd
+license: MIT
+locales:
+  zh:
+    name: "Beszel"
+    description: "轻量服务器监控 hub：历史指标、Docker 容器统计与告警；被监控的机器上装 beszel-agent。"
+  zh_CN:
+    name: "Beszel"
+    description: "轻量服务器监控 hub：历史指标、Docker 容器统计与告警；被监控的机器上装 beszel-agent。"
+  en:
+    name: "Beszel"
+    description: "Lightweight server monitoring hub with historical metrics, Docker stats and alerts; agents run on monitored machines."
