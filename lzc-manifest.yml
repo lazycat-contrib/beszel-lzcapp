@@ -10,8 +10,8 @@ application:
 services:
   beszel:
     # 镜像模式：Action 只读校验后把这行改写成加速地址（Docker Hub → docker.1ms.run）
-    # upstream: henrygd/beszel:0.21.0
-    image: docker.1ms.run/henrygd/beszel:0.21.0
+    # upstream: henrygd/beszel:0.21.1
+    image: docker.1ms.run/henrygd/beszel:0.21.1
     # scratch 镜像（只有 /beszel 一个静态二进制），默认 root；平台建的 /lzcapp/var/beszel 属主也是 root
     user: root
     environment:
