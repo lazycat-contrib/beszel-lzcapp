@@ -1,5 +1,5 @@
 package: cloud.lazycat.app.beszel
-version: 0.21.1
+version: 0.21.2
 name: Beszel
 description: Lightweight server monitoring hub — historical metrics, Docker container stats and alerts, with agents on the machines you monitor. MIT licensed.
 min_os_version: 1.5.0
